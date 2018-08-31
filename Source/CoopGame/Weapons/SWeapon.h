@@ -8,6 +8,7 @@
 
 class USkeletalMeshComponent;
 class UDamageType;
+class UParticleSystem;
 
 UCLASS()
 class COOPGAME_API ASWeapon : public AActor
@@ -42,7 +43,19 @@ protected:
 	float MaxTraceDistance = 10000;
 
 	/** The type of damage to be applied to the target */
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage")
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
 	TSubclassOf<UDamageType> DamageType;
+
+	/** The name of the socket to attach the muzzle flash and projectile spawn too */
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
+	FName MuzzleSocketName;
+
+	/** Muzzle flash effect */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
+	UParticleSystem* MuzzelEffect;
+
+	/** Impact on target effect */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
+	UParticleSystem* ImpactEffect;
 	
 };

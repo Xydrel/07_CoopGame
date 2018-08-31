@@ -43,10 +43,12 @@ void ASWeapon::Fire()
 		ensure(MuzzelEffect != nullptr);
 		if (MuzzelEffect != nullptr)
 		{
+
 			UGameplayStatics::SpawnEmitterAttached(MuzzelEffect, SkeletalMeshComp, MuzzleSocketName);
 		}
 
-		//DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::Green, false, 10.f, 0, 1.f);
+		// Just a debug trace draw to determine the fire action is occurring and the direction of the projectile
+		DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::Green, false, 10.f, 0, 1.f);
 
 		FCollisionQueryParams QueryParams;
 		QueryParams.AddIgnoredActor(MyOwner);
