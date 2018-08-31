@@ -2,6 +2,7 @@
 
 #include "SWeapon.h"
 #include "Components/SkeletalMeshComponent.h"
+#include "Kismet/GameplayStatics.h"
 
 #include "DrawDebugHelpers.h"
 
@@ -33,7 +34,11 @@ void ASWeapon::Fire()
 		FRotator EyeRotation;
 		MyOwner->GetActorEyesViewPoint(EyeLocation, EyeRotation);
 
-		FVector TraceEnd = EyeLocation + (EyeRotation.Vector() * MaxTraceDistance);
+		FVector ShotDirection = EyeRotation.Vector();
+		FVector TraceEnd = EyeLocation + (ShotDirection * MaxTraceDistance);
+
+		// Just a debug trace draw to determine the fire action is occurring and the direction of the projectile
+		DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::Green, false, 10.f, 0, 1.f);
 
 		FCollisionQueryParams QueryParams;
 		QueryParams.AddIgnoredActor(MyOwner);
@@ -47,9 +52,13 @@ void ASWeapon::Fire()
 												 QueryParams, ResponsParams))
 		{
 			// Blocking hit process damage
+			AActor* HitActor = HitResult.GetActor();
+			if (HitActor != nullptr)
+			{
+				UGameplayStatics::ApplyPointDamage(MyOwner, 20.f, ShotDirection, HitResult, MyOwner->GetInstigatorController(), this, DamageType);
+			}
 		}
 
-		DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::Green, false, 10.f, 0, 1.f);
 	}
 }
 

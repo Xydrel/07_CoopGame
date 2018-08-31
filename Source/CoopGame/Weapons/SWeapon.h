@@ -7,6 +7,7 @@
 #include "SWeapon.generated.h"
 
 class USkeletalMeshComponent;
+class UDamageType;
 
 UCLASS()
 class COOPGAME_API ASWeapon : public AActor
@@ -39,5 +40,9 @@ protected:
 	/** Max distance for weapon trace in centimeters */
 	UPROPERTY(EditAnywhere, Category = "LineTrace")
 	float MaxTraceDistance = 10000;
+
+	/** The type of damage to be applied to the target */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Damage")
+	TSubclassOf<UDamageType> DamageType;
 	
 };
