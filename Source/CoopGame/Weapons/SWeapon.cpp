@@ -55,7 +55,7 @@ void ASWeapon::Fire()
 			AActor* HitActor = HitResult.GetActor();
 			if (HitActor != nullptr)
 			{
-				UGameplayStatics::ApplyPointDamage(MyOwner, 20.f, ShotDirection, HitResult, MyOwner->GetInstigatorController(), this, DamageType);
+				UGameplayStatics::ApplyPointDamage(HitActor, 20.f, ShotDirection, HitResult, MyOwner->GetInstigatorController(), this, DamageType);
 			}
 		}
 
