@@ -6,6 +6,8 @@
 #include "GameFramework/Character.h"
 #include "SCharacter.generated.h"
 
+DECLARE_LOG_CATEGORY_EXTERN(LogPlayerCharacter, Log, All);
+
 class UCameraComponent;
 class USpringArmComponent;
 
@@ -42,8 +44,6 @@ protected:
 	UCameraComponent* CameraComp;
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
-	USpringArmComponent* SpringArmComp;
+	USpringArmComponent* SpringArmComp;	
 
-	
-	
 };
