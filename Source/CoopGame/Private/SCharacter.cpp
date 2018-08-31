@@ -45,6 +45,17 @@ void ASCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 	PlayerInputComponent->BindAction("Jump", IE_Pressed, this, &ASCharacter::Jump);
 }
 
+FVector ASCharacter::GetPawnViewLocation() const
+{
+	if (CameraComp != nullptr)
+	{
+		return CameraComp->GetComponentLocation();
+	}
+
+	// Fall back in case we don't get the camera component location
+	return Super::GetPawnViewLocation();
+}
+
 void ASCharacter::BeginPlay()
 {
 	Super::BeginPlay();

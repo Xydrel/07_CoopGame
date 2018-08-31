@@ -29,8 +29,8 @@ void ASWeapon::Fire()
 	AActor* MyOwner = GetOwner();
 	if (MyOwner != nullptr)
 	{
-		FVector EyeLocation;
-		FRotator EyeRotation;
+		FVector EyeLocation = GetActorLocation();
+		FRotator EyeRotation = GetOwner()->GetActorRotation();
 		MyOwner->GetActorEyesViewPoint(EyeLocation, EyeRotation);
 
 		FVector TraceEnd = EyeLocation + (EyeRotation.Vector() * MaxTraceDistance);

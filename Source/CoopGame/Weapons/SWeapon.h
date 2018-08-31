@@ -25,11 +25,19 @@ public:
 protected:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
+
+	/** Cause the weapon to fire at line traced location */
+	UFUNCTION(BlueprintCallable, Category = "Weapon")
+	void Fire();
 	
 	/** Properties */
 protected:
 	/** Weapon skeletal mesh comp */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	USkeletalMeshComponent* SkeletalMeshComp = nullptr;
+
+	/** Max distance for weapon trace in centimeters */
+	UPROPERTY(EditAnywhere, Category = "LineTrace")
+	float MaxTraceDistance = 10000;
 	
 };

@@ -27,7 +27,6 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	/** Returns the location of the player pawn's camera location */
 	virtual FVector GetPawnViewLocation() const override;
 
 protected:
@@ -43,11 +42,9 @@ protected:
 	void EndCrouch();
 
 protected:
-	/** The Camera component the player views through for gameplay */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	UCameraComponent* CameraComp;
 
-	/** The attachment between the Character Skeletal mesh and the player camera */
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	USpringArmComponent* SpringArmComp;	
 
