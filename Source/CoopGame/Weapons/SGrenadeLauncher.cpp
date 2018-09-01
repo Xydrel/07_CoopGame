@@ -51,6 +51,42 @@ void ASGrenadeLauncher::Fire()
 		//DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::Green, false, 10.f, 0, 1.f);
 		//UGameplayStatics::SuggestProjectileVelocity(GetWorld(), 
 
+		/* From FPS Game ------------
+			// try and fire a projectile
+		if (ProjectileClass != nullptr)
+		{
+			FVector MuzzleLocation = GunMeshComponent->GetSocketLocation("Muzzle");
+			FRotator MuzzleRotation = GunMeshComponent->GetSocketRotation("Muzzle");
+
+			//Set Spawn Collision Handling Override
+			FActorSpawnParameters ActorSpawnParams;
+			ActorSpawnParams.SpawnCollisionHandlingOverride = ESpawnActorCollisionHandlingMethod::AdjustIfPossibleButDontSpawnIfColliding;
+			ActorSpawnParams.Instigator = this;
+
+			// spawn the projectile at the muzzle
+			GetWorld()->SpawnActor<AFPSProjectile>(ProjectileClass, MuzzleLocation, MuzzleRotation, ActorSpawnParams);
+		}
+
+		// try and play the sound if specified
+		if (FireSound != nullptr)
+		{
+			UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetActorLocation());
+		}
+
+		// try and play a firing animation if specified
+		if (FireAnimation != nullptr)
+		{
+			// Get the animation object for the arms mesh
+			UAnimInstance* AnimInstance = Mesh1PComponent->GetAnimInstance();
+			if (AnimInstance)
+			{
+				AnimInstance->PlaySlotAnimationAsDynamicMontage(FireAnimation, "Arms", 0.0f);
+			}
+		}
+		
+		
+		*/
+
 	}
 }
 
