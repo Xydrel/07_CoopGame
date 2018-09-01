@@ -21,6 +21,13 @@ ASWeapon::ASWeapon()
 	TracertTargetName = "BeamEnd";
 }
 
+// Called every frame
+void ASWeapon::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+
+}
+
 // Called when the game starts or when spawned
 void ASWeapon::BeginPlay()
 {
@@ -99,10 +106,4 @@ void ASWeapon::Fire()
 	}
 }
 
-// Called every frame
-void ASWeapon::Tick(float DeltaTime)
-{
-	Super::Tick(DeltaTime);
-
-}
 
