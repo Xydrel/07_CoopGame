@@ -4,6 +4,7 @@
 #include "Components/SkeletalMeshComponent.h"
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleEmitter.h"
+#include "Particles/ParticleSystemComponent.h"
 
 #include "DrawDebugHelpers.h"
 
@@ -17,6 +18,7 @@ ASWeapon::ASWeapon()
 	RootComponent = SkeletalMeshComp;
 
 	MuzzleSocketName = "MuzzleFlashSocket";
+	TracertTargetName = "BeamEnd";
 }
 
 // Called when the game starts or when spawned
@@ -39,6 +41,9 @@ void ASWeapon::Fire()
 
 		FVector ShotDirection = EyeRotation.Vector();
 		FVector TraceEnd = EyeLocation + (ShotDirection * MaxTraceDistance);
+
+		// Set the projectile trace default end 
+		FVector TraceLength = TraceEnd;
 
 		ensure(MuzzelEffect != nullptr);
 		if (MuzzelEffect != nullptr)
@@ -74,8 +79,23 @@ void ASWeapon::Fire()
 					UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, HitResult.ImpactPoint, 
 															 HitResult.ImpactNormal.Rotation());
 				}
+
+				// override the default value since we have a blocking hit and need that impact point
+				TraceLength = HitResult.ImpactPoint;
 			}
 		}
+
+		ensure(TraceEffect != nullptr);
+		if (TraceEffect != nullptr)
+		{
+			FVector MuzzelLocation = SkeletalMeshComp->GetSocketLocation(MuzzleSocketName);
+			UParticleSystemComponent* TracerComponent = UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), TraceEffect, MuzzelLocation);
+			if (TracerComponent != nullptr)
+			{
+				TracerComponent->SetVectorParameter(TracertTargetName, TraceLength);
+			}
+		}
+
 	}
 }
 

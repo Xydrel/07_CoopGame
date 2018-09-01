@@ -30,7 +30,7 @@ protected:
 
 	/** Cause the weapon to fire at line traced location */
 	UFUNCTION(BlueprintCallable, Category = "Weapon")
-	void Fire();
+	virtual void Fire();
 	
 	/** Properties */
 protected:
@@ -50,6 +50,9 @@ protected:
 	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
 	FName MuzzleSocketName;
 
+	UPROPERTY(VisibleDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
+	FName TracertTargetName;
+
 	/** Muzzle flash effect */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
 	UParticleSystem* MuzzelEffect;
@@ -57,5 +60,9 @@ protected:
 	/** Impact on target effect */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
 	UParticleSystem* ImpactEffect;
+
+	/** The projectile trace effect spawned on fire action */
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
+	UParticleSystem* TraceEffect;
 	
 };
