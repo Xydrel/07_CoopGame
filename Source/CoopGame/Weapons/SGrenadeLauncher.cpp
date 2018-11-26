@@ -14,7 +14,7 @@ ASGrenadeLauncher::ASGrenadeLauncher()
 	PrimaryActorTick.bCanEverTick = true;
 
 	MaxTraceDistance = 4000;
-	MuzzleSocketName = "MuzzleFlashSocket";
+	MuzzleSocketName = "Muzzle";
 }
 
 void ASGrenadeLauncher::Tick(float DeltaTime)
@@ -48,15 +48,13 @@ void ASGrenadeLauncher::Fire()
 			UGameplayStatics::SpawnEmitterAttached(MuzzelEffect, SkeletalMeshComp, MuzzleSocketName);
 		}
 
-		//DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::Green, false, 10.f, 0, 1.f);
-		//UGameplayStatics::SuggestProjectileVelocity(GetWorld(), 
 
-		/* From FPS Game ------------
+		// From FPS Game ------------
 			// try and fire a projectile
-		if (ProjectileClass != nullptr)
+		if (GrendateProjectileClass != nullptr)
 		{
-			FVector MuzzleLocation = GunMeshComponent->GetSocketLocation("Muzzle");
-			FRotator MuzzleRotation = GunMeshComponent->GetSocketRotation("Muzzle");
+			FVector MuzzleLocation = LauncherMeshComponent->GetSocketLocation(MuzzleSocketName);
+			FRotator MuzzleRotation = LauncherMeshComponent->GetSocketRotation(MuzzleSocketName);
 
 			//Set Spawn Collision Handling Override
 			FActorSpawnParameters ActorSpawnParams;
@@ -64,14 +62,18 @@ void ASGrenadeLauncher::Fire()
 			ActorSpawnParams.Instigator = this;
 
 			// spawn the projectile at the muzzle
-			GetWorld()->SpawnActor<AFPSProjectile>(ProjectileClass, MuzzleLocation, MuzzleRotation, ActorSpawnParams);
+			GetWorld()->SpawnActor<AGrenadeProjectile>(GrendateProjectileClass, MuzzleLocation, MuzzleRotation, ActorSpawnParams);
 		}
 
+		/*
 		// try and play the sound if specified
 		if (FireSound != nullptr)
 		{
 			UGameplayStatics::PlaySoundAtLocation(this, FireSound, GetActorLocation());
 		}
+
+		//DrawDebugLine(GetWorld(), EyeLocation, TraceEnd, FColor::Green, false, 10.f, 0, 1.f);
+		//UGameplayStatics::SuggestProjectileVelocity(GetWorld(), 
 
 		// try and play a firing animation if specified
 		if (FireAnimation != nullptr)

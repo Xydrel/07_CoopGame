@@ -3,6 +3,7 @@
 #include "GrenadeProjectile.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Components/SphereComponent.h"
+#include "Kismet/GameplayStatics.h"
 #include "TimerManager.h"
 #include "SCharacter.h"
 
@@ -68,9 +69,21 @@ void AGrenadeProjectile::OnExplode()
 		{
 			// may not even need this now with the found method to apply damage below
 			FVector FromExplosionDistance = ProjectileTarget->GetActorLocation() - GetActorLocation();
-			
-			// complete implementation of this method call to apply the damage
-			//UGameplayStatics::ApplyRadialDamageWithFalloff()
+			TArray<AActor*> IgnoreActors;
+			IgnoreActors.Add(GetOwner());
+			IgnoreActors.Add(this);
+
+			ensureMsgf(DamageType != NULL, TEXT("DamageType was not set, please set in the editor."));
+
+			UGameplayStatics::ApplyRadialDamageWithFalloff(this,
+				BaseExplosionDamge,
+				MinExplosionDamge,
+				GetActorLocation(),
+				InnerDamageRadius,
+				OuterDamageRadius,
+				ExplosionDamageFalloff,
+				DamageType,
+				IgnoreActors);
 		}
 	}
 
@@ -81,7 +94,7 @@ void AGrenadeProjectile::BeginPlay()
 {
 	Super::BeginPlay();
 	GetWorldTimerManager().ClearTimer(ExplosionTimer_TimerHandle);
-	GetWorldTimerManager().SetTimer(ExplosionTimer_TimerHandle, this, &AGrenadeProjectile::OnExplode, 1.f);
+	GetWorldTimerManager().SetTimer(ExplosionTimer_TimerHandle, this, &AGrenadeProjectile::OnExplode, ExplosionDelayTimeSeconds);
 }
 
 

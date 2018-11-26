@@ -7,6 +7,7 @@
 #include "SGrenadeLauncher.generated.h"
 
 class UParticleSystem;
+class AGrenadeProjectile;
 
 /**
  * 
@@ -31,6 +32,9 @@ protected:
 
 	/** Properties */
 protected:
+	UPROPERTY(EditAnywhere, Category = "Weapon")
+	USkeletalMeshComponent LauncherMeshComponent;
+
 	/** the explosion particle to be displayed on projectile impact */
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Weapon")
 	UParticleSystem* ExplosionEffect;
@@ -38,4 +42,7 @@ protected:
 	/** The velocity vector of the fired projectile */
 	UPROPERTY(EditAnywhere, Category = "Weapon")
 	FVector ProjectileVelocity = FVector(1000.f, 0.f, 0.f);
+
+
+	AGrenadeProjectile GrendateProjectileClass;
 };
