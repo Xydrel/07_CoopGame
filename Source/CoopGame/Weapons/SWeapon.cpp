@@ -68,23 +68,29 @@ void ASWeapon::Fire()
 		FCollisionResponseParams ResponsParams = FCollisionResponseParams::DefaultResponseParam;
 		FHitResult HitResult;
 		if (GetWorld()->LineTraceSingleByChannel(HitResult, EyeLocation, TraceEnd,
-												 ECollisionChannel::ECC_Visibility,
+												 //ECollisionChannel::ECC_Visibility,
+												 ECollisionChannel::ECC_Pawn,
 												 QueryParams, ResponsParams))
 		{
 			// Blocking hit process damage
 			AActor* HitActor = HitResult.GetActor();
 			if (HitActor != nullptr)
 			{
+				// TODO:
+				// if destructible object
+					// do object destruction
+
+				
 				// Apply the damage to the struck HitActor
 				UGameplayStatics::ApplyPointDamage(HitActor, 20.f, ShotDirection, HitResult, MyOwner->GetInstigatorController(),
-												   this, DamageType);
+													this, DamageType);
 
-				ensure(ImpactEffect != nullptr);
+				ensureMsgf(ImpactEffect != nullptr, TEXT("The Impact Effect was not set, please set the impact effect in the editor."));
 				if (ImpactEffect != nullptr)
 				{
 					// Spawn a decal on the Actor at the impact location
 					UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ImpactEffect, HitResult.ImpactPoint, 
-															 HitResult.ImpactNormal.Rotation());
+																HitResult.ImpactNormal.Rotation());
 				}
 
 				// override the default value since we have a blocking hit and need that impact point
